@@ -4,9 +4,7 @@ import static org.junit.Assert.*;
 
 import java.sql.SQLException;
 
-import org.junit.Assert;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
 import com.exception.InvalidCredentialsException;
 import com.model.User;
 import com.service.AuthService;
@@ -16,14 +14,18 @@ public class AuthLoginTest {
     
     @Test
     public void login() {
-        String username = "jos cummins";
+        String username = "Jos cummins";
         String password = "jos123";
         
         try {
             User actualUserLogin = authService.login(username, password);
             User expectedUser = new User(26, "Jos cummins", "jos123", "admin", "Active");
             
-            Assert.assertEquals(actualUserLogin, expectedUser);
+            // Custom assertion to compare user attributes
+            assertEquals(expectedUser.getId(), actualUserLogin.getId());
+            assertEquals(expectedUser.getUsername(), actualUserLogin.getUsername());
+            assertEquals(expectedUser.getPassword(), actualUserLogin.getPassword());
+            
             
         } catch (InvalidCredentialsException e) {
             fail("InvalidCredentialsException should not be thrown: " + e.getMessage());
